@@ -1,8 +1,9 @@
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterModule } from '@angular/router';
 import { Character } from '@app/shared/interfaces/character.interface';
 import { CharacterService } from '@app/shared/services/character.service';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
 type RequestInfo = {
   next: string;
 }
@@ -10,7 +11,7 @@ type RequestInfo = {
 @Component({
   selector: 'app-character-list',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.css'
 })
@@ -24,10 +25,34 @@ private query = "";
 private hideScrollHeight = 200;
 private showScrollHeight = 500;
 
-constructor(private characterSvc: CharacterService){}
+constructor(
+  private characterSvc: CharacterService,
+  private route: ActivatedRoute,
+  private router:Router
+){
+  this.onUrlChanged();
+}
 
 ngOnInit():void{
-  this.getDataFromService();
+  this.getCharacterByQuery();
+}
+
+private onUrlChanged():void{
+   this.router.events
+   .pipe(filter((event) => event instanceof NavigationEnd))
+   .subscribe(() => {
+    this.characters = [];
+    this.pageNum = 1;
+    this.getCharacterByQuery();
+   });
+}
+
+
+private getCharacterByQuery():void{
+    this.route.queryParams.pipe(take(1)).subscribe((params) => {
+        this.query = params['q'];
+        this.getDataFromService();
+      });
 }
 
 private getDataFromService():void{
@@ -35,9 +60,15 @@ private getDataFromService():void{
   .searchCharacter(this.query, this.pageNum)
   .pipe(take(1))
   .subscribe((res:any) => {
-    const {info, results} = res;
-    this.characters = [...this.characters, ...results];
-    this.info = info;
+
+    if (res?.results?.length) {
+      const {info, results} = res;
+      this.characters = [...this.characters, ...results];
+      this.info = info;
+    }else{
+      this.characters = [];
+    }
+
   })
 }
 }
