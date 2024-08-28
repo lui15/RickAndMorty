@@ -1,5 +1,7 @@
 # 🚀 Rick and Morty API Explorer con Angular
 
+![RickAndMorty - Google Chrome 28_08_2024 05_05_05 p  m](https://github.com/user-attachments/assets/fd0eed7f-c8ff-43c6-a7fe-1bed7578912a)
+
 ## Descripción
 
 Este proyecto es una aplicación web desarrollada en Angular que permite explorar el universo de **Rick and Morty** utilizando la [API de Rick and Morty](https://rickandmortyapi.com/). La aplicación muestra información sobre personajes, episodios y ubicaciones del famoso programa de televisión animado.
@@ -17,4 +19,5 @@ Este proyecto es una aplicación web desarrollada en Angular que permite explora
 - **Rick and Morty API**: Fuente de datos para obtener información sobre los personajes, episodios y ubicaciones.
 - **HTML5 y CSS3**: Creación de una interfaz de usuario atractiva y responsiva.
 - **Bootstrap**: Framework CSS para un diseño moderno y adaptable.
+
 
