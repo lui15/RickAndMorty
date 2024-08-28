@@ -1,6 +1,6 @@
-@if(character$ | async as character){
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4">
+
+<div class="row justify-content-center mt-5" *ngIf="character$ | async as character">
+    <div class="col-xs-12 col-sm-6 col-md-6 justify-co">
         <div class="card">
             <div class="image">
                     <img
@@ -11,9 +11,7 @@
             </div>
             <div class="card-inner">
                 <div class="header">
-                    <a [routerLink]="['/character-details',character.id]">
                         <h2>{{character.name | slice: 0:15}}</h2>
-                    </a>
                     <h4 class="text-muted">{{character.gender}}</h4>
                     <small class="text-muted">{{character.created | date}}</small>
                 </div>
@@ -21,5 +19,7 @@
         </div>
     </div>
 </div>
-}
-<button class="btn- btn-dark">Back</button>
+
+<button (click)="onGoBack()" class="btn btn-primary btn-lg mt-3">
+    Back
+</button>
